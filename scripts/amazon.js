@@ -25,7 +25,7 @@ productsHTML +=
     </div>
 
     <div class="product-price">
-      $${((product.priceCents)/100).toFixed(2)}
+      $${(product.priceCents/100).toFixed(2)}
     </div>
 
     <div class="product-quantity-container">
@@ -45,18 +45,50 @@ productsHTML +=
 
     <div class="product-spacer"></div>
 
-    <div class="added-to-cart">
+    <div class="added-to-cart js-added-to-cart">
       <img src="images/icons/checkmark.png">
       Added
     </div>
 
-    <button class="add-to-cart-button button-primary">
+    <button class="add-to-cart-button button-primary js-add-to-cart-button" data-product-id="${product.id}">
       Add to Cart
     </button>
   </div>
 `
- document.querySelector(".js-productsHTML").innerHTML = productsHTML;
- console.log("Products HTML generated successfully.", productsHTML);
 });
+//show productHTML on the webpage
+document.querySelector(".js-products-HTML").innerHTML = productsHTML;
 
+//to catch all the buttons and loop through them
+document.querySelectorAll(".js-add-to-cart-button")
+  .forEach((button) => {
+  // Add a click event listener to each button
+  button.addEventListener('click', () => {
+    let productId = button.dataset.productId;
+    console.log('hello: ', productId); 
+
+     //Add items to the cart
+    let matchingItem;
+
+    cart.forEach((cartItem) => {
+      if (productId === cartItem.id) {
+        matchingItem = cartItem;
+      }
+    });
+
+    /* this is the same as the above code but used find()
+     const matchingCartItem = cart.find((cartItem) => cartItem.productId === productId); 
+    */
+
+    if (matchingItem) {
+      matchingItem.quantity += 1;
+      } else {
+      cart.push({
+        id: productId,
+        quantity: 1
+      });
+    }
+    console.log('Cart:', cart);
+  });
+});
 
