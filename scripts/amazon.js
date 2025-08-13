@@ -89,14 +89,16 @@ document.querySelectorAll(".js-add-to-cart-button")
       });
     }
     console.log('Cart:', cart);
+    
+    //update the cartItem count on the web cart icon
+    let cartQuantity = 0;
+    cart.forEach((cartItem) => {
+      cartQuantity += cartItem.quantity;
+    document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+    });
+    console.log('Cart Quantity:', cartQuantity);
+
   });
 });
 
-//update the cartItem count on the web cart icon
-let cartQuantity = 0;
-cart.forEach((cartItem) => {
-  cartQuantity += cartItem.quantity;
-});
-console.log('Cart Quantity:', cartQuantity);
-document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
 
