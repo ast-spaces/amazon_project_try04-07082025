@@ -1,4 +1,7 @@
- //use the products.js to generate the products webpage
+import {cart,addToCart} from "../data/cart.js";
+import {products} from "../data/products.js";
+
+//use the products.js to generate the products webpage
  let productsHTML = "";
 
  //loop through the products array and generate the HTML for each product
@@ -67,37 +70,21 @@ document.querySelectorAll(".js-add-to-cart-button")
     let productId = button.dataset.productId;
     console.log('hello: ', productId); 
 
-     //Add items to the cart
-    let matchingItem;
+ //user select items into the cart
+    addToCart(productId);
 
-    cart.forEach((cartItem) => {
-      if (productId === cartItem.productId) {
-        matchingItem = cartItem;
-      }
-    });
-
-    /* this is the same as the above code but used find()
-     const matchingCartItem = cart.find((cartItem) => cartItem.productId === productId); 
-    */
-
-    if (matchingItem) {
-      matchingItem.quantity += 1;
-      } else {
-      cart.push({
-        productId: productId,
-        quantity: 1
-      });
-    }
-    console.log('Cart:', cart);
-    
     //update the cartItem count on the web cart icon
-    let cartQuantity = 0;
-    cart.forEach((cartItem) => {
-      cartQuantity += cartItem.quantity;
-    document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
-    });
-    console.log('Cart Quantity:', cartQuantity);
+    document.querySelector(".js-added-to-cart").classList.add("added");
 
+    function updateCartQuantity(){
+      let cartQuantity = 0;
+      cart.forEach((cartItem) => {
+        cartQuantity += cartItem.quantity;
+      document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+      });
+      console.log('Cart Quantity:', cartQuantity);  
+    }
+    updateCartQuantity();
   });
 });
 
