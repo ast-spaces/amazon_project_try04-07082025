@@ -1,0 +1,59 @@
+/* the following code indicates with a defaultCart and a userCart to be initiated always as cart = []; The implementation of a flag variable: const Is_DEVELOPMENT served the right purpose for which cart to be used and at what instances. (This set of codes is suggested by Copilot)...for my learnning. */
+
+// Set this flag to true for development/testing,
+// and false for production/live usage.
+const IS_DEVELOPMENT = true; // Change to false for production
+
+// Sample cart data for testing and development
+const sampleCart = [
+  { id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6", quantity: 2 },
+  { id: "15b6fc6f-327a-4ec4-896f-486349e85a3d", quantity: 1 }
+];
+
+// Initialize the cart based on the flag
+export let cart = IS_DEVELOPMENT
+  ? sampleCart
+  : (JSON.parse(localStorage.getItem('cart')) || []);
+
+// Utility function: Save cart to localStorage (production mode only)
+function persistCart() {
+  if (!IS_DEVELOPMENT) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+}
+
+// Add a product to the cart
+export function addToCart(productId) {
+  let matchingItem = cart.find(cartItem => cartItem.id === productId);
+
+  if (matchingItem) {
+    matchingItem.quantity += 1;
+  } else {
+    cart.push({
+      id: productId,
+      quantity: 1
+    });
+  }
+  persistCart();
+}
+
+// Remove a product from the cart
+export function removeFromCart(productId) {
+  cart = cart.filter(cartItem => cartItem.id !== productId);
+  persistCart();
+}
+
+// Update the quantity of a product in the cart
+export function updateCartQuantity(productId, newQuantity) {
+  let matchingItem = cart.find(cartItem => cartItem.id === productId);
+  if (matchingItem) {
+    matchingItem.quantity = newQuantity;
+    persistCart();
+  }
+}
+
+// Clear the cart (useful for checkout or when user wants to start fresh)
+export function clearCart() {
+  cart = [];
+  persistCart();
+}

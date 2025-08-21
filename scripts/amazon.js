@@ -1,6 +1,7 @@
+//modules are handled by live server
 import {cart,addToCart} from "../data/cart.js";
 import {products} from "../data/products.js";
-import {formatCurrency} from "../utils/formatCurrency.js"
+import {formatCurrency} from "./utils/formatCurrency.js"
 
 //use the products.js to generate the products webpage
  let productsHTML = "";
@@ -63,6 +64,15 @@ productsHTML +=
 //show productHTML on the webpage
 document.querySelector(".js-products-HTML").innerHTML = productsHTML;
 
+function updateCartQuantity(){
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+  });
+  console.log('Cart Quantity:', cartQuantity);  
+}
+
 //to catch all the buttons and loop through them
 document.querySelectorAll(".js-add-to-cart-button")
   .forEach((button) => {
@@ -73,18 +83,6 @@ document.querySelectorAll(".js-add-to-cart-button")
 
  //user select items into the cart
     addToCart(productId);
-
-    //update the cartItem count on the web cart icon
-    document.querySelector(".js-added-to-cart").classList.add("added");
-
-    function updateCartQuantity(){
-      let cartQuantity = 0;
-      cart.forEach((cartItem) => {
-        cartQuantity += cartItem.quantity;
-      document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
-      });
-      console.log('Cart Quantity:', cartQuantity);  
-    }
     updateCartQuantity();
   });
 });
