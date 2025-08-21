@@ -1,6 +1,8 @@
 import {cart} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/formatCurrency.js';
+import dayjs from 'http://unpkg.com/dayjs@1.11.10/esm/index.js';
+import {deliveryOptions} from './scripts/deliveryOptions.js'
 
 //cart initiated empty
 console.log('Initiated as cart in amazon.js: ', cart);
@@ -57,7 +59,7 @@ cart.forEach((cartItem) => {
           <div class="delivery-option">
             <input type="radio" checked
               class="delivery-option-input"
-              name="delivery-option-${matchingProduct.productId}">
+              name="delivery-option-${productId}">
             <div>
               <div class="delivery-option-date">
                 Tuesday, June 21
@@ -70,7 +72,7 @@ cart.forEach((cartItem) => {
           <div class="delivery-option">
             <input type="radio"
               class="delivery-option-input"
-              name="delivery-option-${matchingProduct.productId}">
+              name="delivery-option-${productId}">
             <div>
               <div class="delivery-option-date">
                 Wednesday, June 15
@@ -83,7 +85,7 @@ cart.forEach((cartItem) => {
           <div class="delivery-option">
             <input type="radio"
               class="delivery-option-input"
-              name="delivery-option-${matchingProduct.productId}">
+              name="delivery-option-${productId}">
             <div>
               <div class="delivery-option-date">
                 Monday, June 13
@@ -100,5 +102,7 @@ cart.forEach((cartItem) => {
   console.log('cartSummaryHTML: ', cartContainersHTML)
   document.querySelector('.js-cart-summary').innerHTML = cartContainersHTML;
 });
+
+
 
 

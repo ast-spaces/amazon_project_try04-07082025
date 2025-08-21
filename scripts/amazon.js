@@ -68,10 +68,13 @@ function updateCartQuantity(){
   let cartQuantity = 0;
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
-  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+  document.querySelector(".js-cart-quantity").innerHTML = cart.length;
   });
   console.log('Cart Quantity:', cartQuantity);  
+  console.log('Cart array length:', cart.length);  
 }
+  updateCartQuantity();
+
 
 //to catch all the buttons and loop through them
 document.querySelectorAll(".js-add-to-cart-button")
